@@ -69,4 +69,20 @@ abstract final class AppStrings {
   static const ukuranKertas = 'Ukuran kertas';
   static const tesCetak = 'Tes Cetak';
   static const terhubung = 'Terhubung';
+  static const namaToko = 'Nama Toko';
+  static const alamatToko = 'Alamat Toko';
+  static const unggahGambarQris = 'Unggah gambar QRIS';
+  static const ganti = 'Ganti';
+  static const hapus = 'Hapus';
+  static const lewati = 'Lewati';
+  static const lanjut = 'Lanjut';
+  static const selesai = 'Selesai';
+  static const pengaturanTersimpan = 'Pengaturan tersimpan';
+
+  // Setup awal
+  static const setupJudul = 'Selamat Datang di Astron Kasir';
+  static const setupSubjudul = 'Isi info toko kamu untuk mulai jualan';
+  static const setupQrisJudul = 'Unggah QRIS Toko (Opsional)';
+  static const setupQrisSubjudul =
+      'Bisa dilewati dan diisi nanti lewat Pengaturan Toko';
 }

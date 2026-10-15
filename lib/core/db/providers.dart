@@ -16,3 +16,8 @@ final storeSettingsDaoProvider = Provider((ref) => ref.watch(databaseProvider).s
 final onboardingDoneProvider = StreamProvider<bool>((ref) {
   return ref.watch(storeSettingsDaoProvider).watch().map((s) => s.onboardingDone);
 });
+
+/// Baris store_settings secara utuh, dipakai layar Pengaturan Toko & Kasir.
+final storeSettingsStreamProvider = StreamProvider((ref) {
+  return ref.watch(storeSettingsDaoProvider).watch();
+});
