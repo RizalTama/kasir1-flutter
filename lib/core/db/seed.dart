@@ -7,12 +7,8 @@ Future<void> seedDemoData(AppDatabase db) async {
   final existing = await db.categoryDao.getAll();
   if (existing.isNotEmpty) return;
 
-  final minumanId = await db.categoryDao.insertCategory(
-    CategoriesCompanion.insert(name: 'Minuman', sortOrder: Value(0)),
-  );
-  final makananId = await db.categoryDao.insertCategory(
-    CategoriesCompanion.insert(name: 'Makanan', sortOrder: Value(1)),
-  );
+  final minumanId = await db.categoryDao.insertCategory('Minuman');
+  final makananId = await db.categoryDao.insertCategory('Makanan');
 
   final demoProducts = [
     (name: 'Kopi Susu', price: 18000, categoryId: minumanId),

@@ -45,4 +45,15 @@ class ProductDao extends DatabaseAccessor<AppDatabase>
       ),
     );
   }
+
+  /// Jumlah produk (aktif maupun tidak) yang masih terhubung ke kategori
+  /// ini, dipakai validasi "hapus kategori hanya jika kosong".
+  Future<int> countInCategory(int categoryId) async {
+    final countExp = products.id.count();
+    final query = selectOnly(products)
+      ..addColumns([countExp])
+      ..where(products.categoryId.equals(categoryId));
+    final row = await query.getSingle();
+    return row.read(countExp) ?? 0;
+  }
 }
