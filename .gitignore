@@ -46,3 +46,6 @@ app.*.map.json
 
 # Internal project notes (private)
 Claude.md
+
+# Claude Code local tool state
+.claude/

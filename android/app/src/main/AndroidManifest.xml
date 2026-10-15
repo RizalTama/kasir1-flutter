@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="astron_kasir"
+        android:label="Astron Kasir"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

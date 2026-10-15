@@ -1,4 +1,4 @@
-package id.astronlabs.astron_kasir
+package id.astronlabs.kasir
 
 import io.flutter.embedding.android.FlutterActivity
 
