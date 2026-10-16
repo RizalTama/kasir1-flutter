@@ -12,6 +12,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text.dart';
 import '../../core/utils/image_storage.dart';
 import '../../core/utils/money.dart';
+import '../../core/widgets/empty_state.dart';
 import '../../core/widgets/primary_button.dart';
 import '../../core/widgets/total_card.dart';
 import '../pos/cart_provider.dart';
@@ -374,30 +375,12 @@ class _QrisUnavailable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.qr_code_2_outlined,
-              size: 56,
-              color: AppColors.textSubtle,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'QRIS toko belum diunggah',
-              textAlign: TextAlign.center,
-              style: AppText.bodyStrong,
-            ),
-            const SizedBox(height: 16),
-            OutlinedButton(
-              onPressed: onOpenSettings,
-              child: const Text('Buka Pengaturan Toko'),
-            ),
-          ],
-        ),
+    return EmptyState(
+      icon: Icons.qr_code_2_outlined,
+      title: 'QRIS toko belum diunggah',
+      action: OutlinedButton(
+        onPressed: onOpenSettings,
+        child: const Text('Buka Pengaturan Toko'),
       ),
     );
   }

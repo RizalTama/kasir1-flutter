@@ -77,6 +77,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  assets:
+    - assets/brand/icon.png
+
   fonts:
     - family: Sora
       fonts:
@@ -96,3 +99,11 @@ flutter:
           weight: 400
         - asset: assets/fonts/JetBrainsMono-700.ttf
           weight: 700
+
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/brand/icon.png"
+  adaptive_icon_background: "#0B1026"
+  adaptive_icon_foreground: "assets/brand/icon_foreground.png"
+  min_sdk_android: 23
