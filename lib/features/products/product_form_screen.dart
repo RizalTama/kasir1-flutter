@@ -71,7 +71,17 @@ class _ProductFormScreenState extends ConsumerState<ProductFormScreen> {
   Future<void> _pickImage() async {
     final path = await pickImageFromSheet(context);
     if (path == null || !mounted) return;
-    final saved = await saveProductImage(path);
+    final String saved;
+    try {
+      saved = await saveProductImage(path);
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Gagal memproses gambar, coba foto lain')),
+        );
+      }
+      return;
+    }
     if (!mounted) return;
     final old = _imagePath;
     setState(() => _imagePath = saved);

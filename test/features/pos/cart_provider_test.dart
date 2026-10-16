@@ -47,6 +47,57 @@ void main() {
       expect(container.read(cartProvider), isEmpty);
       expect(container.read(cartTotalProvider), 0);
     });
+
+    test('setNote menyimpan catatan pada item yang tepat', () {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final notifier = container.read(cartProvider.notifier);
+
+      notifier.addProduct(_product(id: 1, name: 'Kopi Susu'));
+      notifier.addProduct(_product(id: 2, name: 'Es Teh'));
+      notifier.setNote(1, 'Less sugar');
+
+      final cart = container.read(cartProvider);
+      expect(cart.firstWhere((i) => i.productId == 1).note, 'Less sugar');
+      expect(cart.firstWhere((i) => i.productId == 2).note, isNull);
+    });
+
+    test('setNote dengan string kosong mengosongkan catatan', () {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final notifier = container.read(cartProvider.notifier);
+
+      notifier.addProduct(_product());
+      notifier.setNote(1, 'Less sugar');
+      notifier.setNote(1, '   ');
+
+      expect(container.read(cartProvider).first.note, isEmpty);
+    });
+
+    test('removeItem menghapus item terlepas dari qty', () {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final notifier = container.read(cartProvider.notifier);
+
+      notifier.addProduct(_product());
+      notifier.increment(1);
+      notifier.removeItem(1);
+
+      expect(container.read(cartProvider), isEmpty);
+    });
+
+    test('clear mengosongkan seluruh keranjang', () {
+      final container = ProviderContainer();
+      addTearDown(container.dispose);
+      final notifier = container.read(cartProvider.notifier);
+
+      notifier.addProduct(_product(id: 1));
+      notifier.addProduct(_product(id: 2, name: 'Es Teh'));
+      notifier.clear();
+
+      expect(container.read(cartProvider), isEmpty);
+      expect(container.read(cartItemCountProvider), 0);
+    });
   });
 
   testWidgets('ketuk ProductCard -> badge jumlah & total keranjang benar', (

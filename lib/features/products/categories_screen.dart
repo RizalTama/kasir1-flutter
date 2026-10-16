@@ -15,7 +15,12 @@ class CategoriesScreen extends ConsumerWidget {
   Future<void> _addCategory(BuildContext context, WidgetRef ref) async {
     final name = await _promptName(context, title: 'Tambah Kategori');
     if (name == null || name.trim().isEmpty) return;
-    await ref.read(categoryDaoProvider).insertCategory(name.trim());
+    try {
+      await ref.read(categoryDaoProvider).insertCategory(name.trim());
+    } catch (_) {
+      if (!context.mounted) return;
+      _showNameTakenError(context, name.trim());
+    }
   }
 
   Future<void> _renameCategory(
@@ -31,7 +36,20 @@ class CategoriesScreen extends ConsumerWidget {
     if (name == null || name.trim().isEmpty || name.trim() == category.name) {
       return;
     }
-    await ref.read(categoryDaoProvider).renameCategory(category.id, name.trim());
+    try {
+      await ref
+          .read(categoryDaoProvider)
+          .renameCategory(category.id, name.trim());
+    } catch (_) {
+      if (!context.mounted) return;
+      _showNameTakenError(context, name.trim());
+    }
+  }
+
+  void _showNameTakenError(BuildContext context, String name) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Nama kategori "$name" sudah dipakai')),
+    );
   }
 
   Future<String?> _promptName(

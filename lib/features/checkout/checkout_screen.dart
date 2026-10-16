@@ -70,6 +70,10 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen>
     if (amountPaid < total || _saving) return;
     setState(() => _saving = true);
 
+    // Ambil referensi notifier sebelum await — aman dipakai walau widget
+    // sempat ter-dispose selagi menunggu, beda dengan ref.read() yang butuh
+    // widget masih hidup.
+    final cartNotifier = ref.read(cartProvider.notifier);
     final cart = ref.read(cartProvider);
     final trx = await ref
         .read(transactionDaoProvider)
@@ -79,8 +83,10 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen>
           amountPaid: amountPaid,
         );
 
+    // Clear keranjang segera setelah transaksi tersimpan supaya item yang
+    // sama tidak bisa ke-checkout dobel, terlepas dari status mounted.
+    cartNotifier.clear();
     if (!mounted) return;
-    ref.read(cartProvider.notifier).clear();
     context.replace('/pos/success/${trx.id}');
   }
 
@@ -120,6 +126,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen>
     if (confirmed != true || !mounted || _saving) return;
     setState(() => _saving = true);
 
+    final cartNotifier = ref.read(cartProvider.notifier);
     final cart = ref.read(cartProvider);
     final trx = await ref
         .read(transactionDaoProvider)
@@ -129,8 +136,8 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen>
           amountPaid: total,
         );
 
+    cartNotifier.clear();
     if (!mounted) return;
-    ref.read(cartProvider.notifier).clear();
     context.replace('/pos/success/${trx.id}');
   }
 

@@ -150,5 +150,13 @@ abstract final class ReceiptBuilder {
     }
   }
 
-  static List<int> _encode(String text) => latin1.encode(text);
+  /// `latin1.encode` melempar [ArgumentError] untuk karakter di luar Latin-1
+  /// (mis. emoji di nama produk/catatan — input bebas dari user). Ganti
+  /// karakter semacam itu dengan `?` supaya cetak struk tidak pernah crash.
+  static List<int> _encode(String text) {
+    final safe = String.fromCharCodes(
+      text.codeUnits.map((c) => c <= 0xFF ? c : 0x3F),
+    );
+    return latin1.encode(safe);
+  }
 }

@@ -45,5 +45,31 @@ void main() {
       expect(decoded, contains('TRX-00128'));
       expect(decoded, contains('36.000'));
     });
+
+    test('tidak crash walau nama produk/catatan berisi emoji di luar Latin-1', () {
+      final data = ReceiptData(
+        storeName: 'Kedai Senja ☕',
+        storeAddress: 'Jl. Melati No. 12',
+        receiptFooter: 'Terima kasih! 🙏',
+        trxCode: 'TRX-00001',
+        createdAt: DateTime(2026, 10, 14, 12, 30),
+        items: const [
+          ReceiptItem(
+            name: 'Kopi Susu ☕',
+            qty: 1,
+            unitPrice: 18000,
+            lineTotal: 18000,
+            note: 'Less sugar 😊',
+          ),
+        ],
+        total: 18000,
+        paymentMethod: 'cash',
+        amountPaid: 20000,
+        changeAmount: 2000,
+      );
+
+      expect(() => ReceiptBuilder.toBytes(data, 58), returnsNormally);
+      expect(ReceiptBuilder.toBytes(data, 58), isNotEmpty);
+    });
   });
 }

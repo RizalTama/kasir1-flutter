@@ -51,7 +51,17 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   Future<void> _pickQris() async {
     final path = await pickImageFromSheet(context);
     if (path == null || !mounted) return;
-    final saved = await saveQrisImage(path);
+    final String saved;
+    try {
+      saved = await saveQrisImage(path);
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Gagal memproses gambar, coba foto lain')),
+        );
+      }
+      return;
+    }
     if (!mounted) return;
     final old = _qrisPath;
     setState(() => _qrisPath = saved);
