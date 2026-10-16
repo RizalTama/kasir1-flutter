@@ -6,3 +6,9 @@ final _rupiahFormat = NumberFormat.decimalPattern('id_ID');
 String formatRupiah(int amount) {
   return 'Rp${_rupiahFormat.format(amount)}';
 }
+
+/// Sama seperti [formatRupiah] tapi tanpa prefix `Rp` — dipakai di struk
+/// yang sudah punya header "TOTAL"/"Tunai" dsb sebagai konteks.
+String formatRupiahPlain(int amount) {
+  return _rupiahFormat.format(amount);
+}
