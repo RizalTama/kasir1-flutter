@@ -11,6 +11,7 @@ final categoryDaoProvider = Provider((ref) => ref.watch(databaseProvider).catego
 final productDaoProvider = Provider((ref) => ref.watch(databaseProvider).productDao);
 final transactionDaoProvider = Provider((ref) => ref.watch(databaseProvider).transactionDao);
 final storeSettingsDaoProvider = Provider((ref) => ref.watch(databaseProvider).storeSettingsDao);
+final reportDaoProvider = Provider((ref) => ref.watch(databaseProvider).reportDao);
 
 /// Status onboarding toko, dipakai redirect di [appRouterProvider].
 final onboardingDoneProvider = StreamProvider<bool>((ref) {

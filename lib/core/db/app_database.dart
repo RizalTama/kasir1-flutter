@@ -3,6 +3,7 @@ import 'package:drift_flutter/drift_flutter.dart';
 
 import 'daos/category_dao.dart';
 import 'daos/product_dao.dart';
+import 'daos/report_dao.dart';
 import 'daos/store_settings_dao.dart';
 import 'daos/transaction_dao.dart';
 import 'tables/categories_table.dart';
@@ -21,7 +22,7 @@ part 'app_database.g.dart';
     TransactionItems,
     StoreSettings,
   ],
-  daos: [CategoryDao, ProductDao, TransactionDao, StoreSettingsDao],
+  daos: [CategoryDao, ProductDao, TransactionDao, StoreSettingsDao, ReportDao],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
